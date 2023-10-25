@@ -11,7 +11,7 @@ jobs:
     steps:
       - run: echo "Fase de construccion"
 
- test:
+  test:
    runs-on: ubuntu-latest
     steps:
       - run: echo "Fase de pruebas"
