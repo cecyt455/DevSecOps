@@ -25,7 +25,6 @@ jobs:
         run: ls -ltra target  
 
 
-jobs:
   depchecktest:
     runs-on: ubuntu-latest
     name: depecheck_test
