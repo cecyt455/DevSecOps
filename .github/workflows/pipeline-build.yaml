@@ -15,7 +15,7 @@ jobs:
       - name: "Instalacion Java"
         uses: actions/setup-java@v3
         with: 
-          distribucion: "temurin"
+          distribution: "temurin"
           java-version: "17"
 
       - name: "Compilacion"
