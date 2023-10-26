@@ -1,4 +1,4 @@
-name: Docker-Build
+name: GOAT Compile
  
 on:
   push:
@@ -6,13 +6,42 @@ on:
       - main
  
 jobs:
-  build:
+  integration:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
       actions: read
       contents: read
-    
+ 
     steps:
-      - name: "Creando imagen"
-        run: docker run -d -p 80:80 --name my-apache-php-app-2 -v "$PWD":/var/www/html php:7.2-apache
+      - name: "Obteniendo ultima version del codigo"
+        uses: actions/checkout@v3
+ 
+      - name: "Instalacion Java"
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+ 
+      - name: "Compilacion"
+        run: ./mvnw clean install
+ 
+      - name: "Verificar paquete"
+        run: ls -ltra target
+ 
+      - name: "Dependency Check"
+        uses: dependency-check/Dependency-Check_Action@main
+        env:
+          JAVA_HOME: /opt/jdk
+        id: Depcheck
+        with:
+          project: 'WebGoat'
+          path: '.'
+          format: 'HTML'
+          out: 'reports'
+ 
+      - name: "Verificar reporte"
+        run: ls -ltra reports
+ 
+      - name: "Imagen Docker"
+        run: "docker build -t prueba:latest ./"
