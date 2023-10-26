@@ -15,4 +15,4 @@ jobs:
     
     steps:
       - name: "Creando imagen"
-        run: docker run -d -p 80:80 --name my-apache-php-app-2 -v "$PWD":/var/www/html php:7.2-apachels
+        run: docker run -d -p 80:80 --name my-apache-php-app-2 -v "$PWD":/var/www/html php:7.2-apache
