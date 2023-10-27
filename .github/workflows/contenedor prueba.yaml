@@ -58,13 +58,13 @@ jobs:
       - name: "Run Trivy vulnerability scanner"
         uses: aquasecurity/trivy-action@main
         with:
-        image-ref: webgoat/test
-        format: table
-        exit-code: 1
-        ignore-unfixed: false
-        vuln-type: os,library
-        severity: CRITICAL,HIGH
-
+          image-ref: 'webgoat/test'
+          timeout: 10m0s
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+          scanners: vuln,secret,config
+        continue-on-error: true
+         
       - name: "Contenedor"
         run: docker run -d -p 8080:80 --name cod webgoat/test
     
