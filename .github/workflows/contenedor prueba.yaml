@@ -7,15 +7,16 @@ on:
 
 jobs:
   build:
-      name: Build
+      name: "Build"
       runs-on: ubuntu-20.04
   steps:
-    - name: Checkout code
+    - name: "Checkout code"
       uses: actions/checkout@v2
-    - name: Build an image from Dockerfile
+    - name: "Build an image from Dockerfile"
       run: |
-          docker build -t docker.io/my-organization/my-app:${{ github.sha }} .
-    - name: Run Trivy vulnerability scanner
+        docker build -t docker.io/my-organization/my-app:${{ github.sha }} .
+
+    - name: "Run Trivy vulnerability scanner"
       uses: aquasecurity/trivy-action@master
       with:
       image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
