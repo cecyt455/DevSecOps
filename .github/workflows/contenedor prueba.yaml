@@ -1,27 +1,75 @@
-name: build
+name: GOAT Compile
+ 
 on:
   push:
     branches:
       - main
-  pull_request:
-
+ 
 jobs:
-  build:
-      name: "Build"
-      runs-on: ubuntu-20.04
-  steps:
-    - name: "Checkout code"
-      uses: actions/checkout@v2
-    - name: "Build an image from Dockerfile"
-      run: |
-        docker build -t docker.io/my-organization/my-app:${{ github.sha }} .
+  integration:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+ 
+    steps:
+      - name: "Obteniendo ultima version del codigo"
+        uses: actions/checkout@v3
+ 
+      - name: "Instalacion Java"
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+ 
+      - name: "Compilacion"
+        run: ./mvnw clean install
+ 
+      - name: "Verificar paquete"
+        run: ls -ltra target
+ 
+      - name: "Dependency Check"
+        uses: dependency-check/Dependency-Check_Action@main
+        env:
+          JAVA_HOME: /opt/jdk
+        id: Depcheck
+        with:
+          project: 'WebGoat'
+          path: '.'
+          format: 'HTML'
+          out: 'reports'
+ 
+      - name: "Verificar reporte"
+        run: ls -ltra reports
 
-    - name: "Run Trivy vulnerability scanner"
-      uses: aquasecurity/trivy-action@master
-      with:
-      image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
-      format: 'table'
-      exit-code: '1'
-      ignore-unfixed: true
-      vuln-type: 'os,library'
-      severity: 'CRITICAL,HIGH'
+      - name: "Instalando Horusec"
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest-beta
+
+      - name: "Horusec -SAST"
+        run: horusec start -p="./"
+
+      - name: "Imagen Docker"
+        run: |
+          docker build -f Dockerfile . -t webgoat/test
+          docker images
+
+      - name: "Run Trivy vulnerability scanner"
+        uses: aquasecurity/trivy-action@master
+        with:
+        image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+
+      - name: "Contenedor"
+        run: docker run -d -p 8080:80 --name cod webgoat/test
+    
+      - name: "Listado"
+        run: docker ps -a
+
+      - name: "Iniciar"
+        run: docker container start cod
