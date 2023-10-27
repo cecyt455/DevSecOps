@@ -59,11 +59,11 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
         image-ref: webgoat/test
-        format: 'table'
-        exit-code: '1'
-        ignore-unfixed: true
-        vuln-type: 'os,library'
-        severity: 'CRITICAL,HIGH'
+        format: table
+        exit-code: 1
+        ignore-unfixed: false
+        vuln-type: os,library
+        severity: CRITICAL,HIGH
 
       - name: "Contenedor"
         run: docker run -d -p 8080:80 --name cod webgoat/test
