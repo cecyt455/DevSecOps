@@ -58,3 +58,6 @@ jobs:
       - name: "Contenedor"
         run: |
           docker run -d -p 8080:80 webgoat/test
+        
+      - name: "Listado"
+        run: docker container ls | grep webgoat/test
