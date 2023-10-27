@@ -56,7 +56,7 @@ jobs:
           docker images
 
       - name: "Run Trivy vulnerability scanner"
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@main
         with:
         image-ref: webgoat/test
         format: table
