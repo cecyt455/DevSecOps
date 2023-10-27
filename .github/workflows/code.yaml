@@ -55,6 +55,9 @@ jobs:
           docker build -f Dockerfile . -t webgoat/test
           docker images
 
+      - name: "Evaluar la imagen"
+        run: trivy image webgoat/test
+
       - name: "Contenedor"
         run: docker run -d -p 8080:80 --name cod webgoat/test
     
@@ -62,4 +65,4 @@ jobs:
         run: docker ps -a
 
       - name: "Iniciar"
-        run: docker container start code
+        run: docker container start cod
