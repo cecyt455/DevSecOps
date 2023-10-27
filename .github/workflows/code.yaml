@@ -56,7 +56,7 @@ jobs:
           docker images
 
       - name: "Contenedor"
-        run: docker run -d -p 8080:80 -- name cod webgoat/test
+        run: docker run -d -p 8080:80 --name cod webgoat/test
     
       - name: "Listado"
         run: docker ps -a
