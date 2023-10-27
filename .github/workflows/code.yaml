@@ -52,5 +52,5 @@ jobs:
 
       - name: "Imagen Docker"
         run: |
-        docker build -t Dockerfile . -t webgoat/test
-        docker images
+          docker build -t Dockerfile . -t webgoat/test
+          docker images
