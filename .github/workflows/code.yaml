@@ -54,3 +54,7 @@ jobs:
         run: |
           docker build -f Dockerfile . -t webgoat/test
           docker images
+
+      - naeme: "Contenedor"
+        run: |
+          docker run -d -p 8080:80 webgoat/test
