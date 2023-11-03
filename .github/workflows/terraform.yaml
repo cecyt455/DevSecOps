@@ -57,12 +57,25 @@ jobs:
           ip_terra=$( cat tfplan.txt | grep My_ip | xargs | cut -d '=' -f 2)
           sed -i "s/IP/$ip_terra/g" ../Ansible/inventario 
 
+    -   name: "Ejecutar Ansible"
+        env: 
+          PRIVATE_KEY: ${{secrets.CECY_PEM}}
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+          cd ansible1
+          echo "$PRIVATE_KEY" >> ${{secrets.CECI_PEM}}
+          sudo chmod 600 ${{secrets.CECI_PEM}}
+          export ANSIBLE_HOST_KEY_CHECKING= False
+          ansible-playbook -i inventario server1.yaml --become
+        continue-on-error: true
+
       - name: "Destrucción"
         run: |
           cd terraformm
           terraform plan -destroy -out tfplan
           terraform apply tfplan
           terraform destroy
-          
+
           
 
