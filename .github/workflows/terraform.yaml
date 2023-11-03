@@ -40,14 +40,4 @@ jobs:
           aws-access-key-id: ${{ secrets.CECYID}}
           aws-secret-access-key: ${{ secrets.CECYKEY }}
           aws-region: us-east-2
-
-      - name: Read secrets from AWS Secrets Manager into environment variables
-        uses: abhilash1in/aws-secrets-manager-action@v2.1.0
-        with:
-          secrets: |
-              "$CECYID"
-              "$CECYKEY"
-          parse-json: true
-
-      - name: Check if env variable is set after fetching secrets
-        run: if [ -z ${CECYID+x} ]; then echo "CECYID is unset"; else echo "CECYID is set to '$CECYID'"; fi
+          
