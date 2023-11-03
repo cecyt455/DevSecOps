@@ -8,7 +8,6 @@
         upgrade: yes
         update_cache: yes
 
-
     - name: Install aptitude
       apt:
         name: aptitude
