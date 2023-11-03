@@ -52,7 +52,7 @@ jobs:
           cd terraformm
           terraform init
           terraform plan -out ftplan
-          terraform apply tfplan
+          terraform apply "tfplan"
           terraform apply tfplan >> results_ftplan.txt
 
 
