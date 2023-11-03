@@ -53,6 +53,7 @@ jobs:
           terraform init
           terraform plan -out ftplan
           terraform apply tfplan
+          terraform apply ftplan >> results_ftplan.txt
 
 
           
