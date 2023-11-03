@@ -71,13 +71,13 @@ jobs:
           ansible-playbook -i inventario server1.yaml --become -private-key $HOME/Cecilia_Aparicio.pem
         continue-on-error: true
 
-      - name: "Destrucción"
+    -   name: "Destrucción"
         run: |
           cd terraformm
           terraform plan -destroy -out tfplan
           terraform apply tfplan
           terraform destroy
-          
+
 
 
           
