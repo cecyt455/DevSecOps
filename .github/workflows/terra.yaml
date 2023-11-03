@@ -57,7 +57,7 @@ jobs:
           mi_ip=$( cat tfplan.txt | grep My_ip | xargs | cut -d '=' -f 2)
           sed -i "s/IP/$mi_ip/g" ../ansible1/inventario 
 
-    -   name: "Ejecutar Ansible"
+      - name: "Ejecutar Ansible"
         env: 
           PRIVATE_KEY: ${{secrets.CECY_PEM}}
         run: |
@@ -71,7 +71,7 @@ jobs:
           ansible-playbook -i inventario server1.yaml --become -private-key $HOME/Cecilia_Aparicio.pem
         continue-on-error: true
 
-    -   name: "Destrucción"
+      - name: "Destrucción"
         run: |
           cd terraformm
           terraform plan -destroy -out tfplan
