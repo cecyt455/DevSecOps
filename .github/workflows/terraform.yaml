@@ -63,11 +63,12 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y ansible
-          cd ansible1
-          echo "$PRIVATE_KEY" >> ${{secrets.CECI_PEM}}
-          sudo chmod 600 ${{secrets.CECI_PEM}}
+          pip3 install "ansible-lint"
+          cd ansible1/
+          echo "$PRIVATE_KEY" >> $HOME/Cecilia_Aparicio.pem
+          sudo chmod 600 $HOME/Cecilia_Aparicio.pem
           export ANSIBLE_HOST_KEY_CHECKING= False
-          ansible-playbook -i inventario server1.yaml --become
+          ansible-playbook -i inventario server1.yaml --become -private-key $HOME/Cecilia_Aparicio.pem
         continue-on-error: true
 
       - name: "Destrucción"
