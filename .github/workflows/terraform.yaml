@@ -51,9 +51,8 @@ jobs:
         run: |
           cd terraformm
           terraform init
-          terraform validate
-          terraform plan 
-          terraform apply 
+          terraform plan -out ftplan
+          terraform apply tfplan
 
 
           
