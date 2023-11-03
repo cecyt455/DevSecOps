@@ -55,6 +55,11 @@ jobs:
           terraform apply "tfplan"
           terraform apply tfplan >> results_ftplan.txt
 
-
+      - name: "Destrucción"
+        run: |
+          cd terraformm
+          terraform plan -destroy -out tfplan
+          terraform apply tfplan
+          terraform destroy
           
 
