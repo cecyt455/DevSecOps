@@ -54,8 +54,8 @@ jobs:
           terraform validate
           terraform plan -out tfplan
           terraform apply tfplan >> tfplan.txt
-          ip_terra=$( cat tfplan.txt | grep My_ip | xargs | cut -d '=' -f 2)
-          sed -i "s/IP/$ip_terra/g" ../Ansible/inventario 
+          mi_ip=$( cat tfplan.txt | grep My_ip | xargs | cut -d '=' -f 2)
+          sed -i "s/IP/$mi_ip/g" ../ansible1/inventario 
 
     -   name: "Ejecutar Ansible"
         env: 
@@ -67,7 +67,7 @@ jobs:
           cd ansible1/
           echo "$PRIVATE_KEY" >> $HOME/Cecilia_Aparicio.pem
           sudo chmod 600 $HOME/Cecilia_Aparicio.pem
-          export ANSIBLE_HOST_KEY_CHECKING= False
+          export ANSIBLE_HOST_KEY_CHECKING=False
           ansible-playbook -i inventario server1.yaml --become -private-key $HOME/Cecilia_Aparicio.pem
         continue-on-error: true
 
