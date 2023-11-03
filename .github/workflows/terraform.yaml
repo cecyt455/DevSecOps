@@ -50,4 +50,4 @@ jobs:
           parse-json: true
 
       - name: Check if env variable is set after fetching secrets
-        run: if [ -z ${CECYID+x} ]; then echo "CECYID is unset"; else echo "CECYID is set to '$CECYID'"; fi
+        run: if [ -z ${MY_SECRET_1+x} ]; then echo "MY_SECRET_1 is unset"; else echo "MY_SECRET_1 is set to '$MY_SECRET_1'"; fi
