@@ -54,7 +54,7 @@ jobs:
           terraform validate
           terraform plan -out tfplan
           terraform apply tfplan >> results_tfplan.txt
-          ip_webgoat=$( cat results_tfplan.txt | grep "My_ip=" | awk'{print $3}' | sed 's/"//g')
+          ip_webgoat=$( cat results_tfplan.txt | grep "My_ip=" | awk '{ print $3 }' | sed 's/"//g')
           sed -i "s/IP/$ip_webgoat/g" ../ansible1/inventario 
 
       - name: "Ejecutar Ansible"
@@ -77,5 +77,4 @@ jobs:
           terraform plan -destroy -out tfplan
           terraform apply tfplan
           terraform destroy
-
 
