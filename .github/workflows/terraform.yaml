@@ -39,15 +39,15 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.CECYID}}
           aws-secret-access-key: ${{ secrets.CECYKEY }}
-          aws-region: ${{ secrets.US_EAST_2}}
+          aws-region: us-esat-2
 
       - name: Read secrets from AWS Secrets Manager into environment variables
         uses: abhilash1in/aws-secrets-manager-action@v2.1.0
         with:
           secrets: |
-              CECYID
-              CECYKEY
+              "$CECYID"
+              "$CECYKEY"
           parse-json: true
 
       - name: Check if env variable is set after fetching secrets
-        run: if [ -z ${MY_SECRET_1+x} ]; then echo "MY_SECRET_1 is unset"; else echo "MY_SECRET_1 is set to '$MY_SECRET_1'"; fi
+        run: if [ -z ${CECYID+x} ]; then echo "CECYID is unset"; else echo "CECYID is set to '$CECYID'"; fi
