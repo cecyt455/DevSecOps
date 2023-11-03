@@ -49,12 +49,14 @@ jobs:
 
       - name: "Aprovisionamiento terraform"
         run: |
-          cd terraformm
-          terraform init
-          terraform plan -out ftplan
-          terraform apply "tfplan"
-          terraform apply tfplan >> results_ftplan.txt
-
+          cd terraformm/
+          terraform init 
+          terraform validate
+          terraform plan -out tfplan
+          terraform apply tfplan >> tfplan.txt
+          ip_terra=$( cat tfplan.txt | grep My_ip | xargs | cut -d '=' -f 2)
+          sed -i "s/IP/$ip_terra/g" ../Ansible/inventario 
+          
       - name: "Destrucción"
         run: |
           cd terraformm
