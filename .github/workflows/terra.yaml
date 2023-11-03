@@ -65,10 +65,10 @@ jobs:
           sudo apt install -y ansible
           pip3 install "ansible-lint"
           cd ansible1/
-          echo "$PRIVATE_KEY" >> $HOME/Cecilia_Aparicio.pem
-          sudo chmod 600 $HOME/Cecilia_Aparicio.pem
+          echo "$PRIVATE_KEY" >> $HOME/key.pem
+          sudo chmod 600 $HOME/key.pem
           export ANSIBLE_HOST_KEY_CHECKING=False
-          ansible-playbook -i inventario server1.yaml --become -private-key $HOME/Cecilia_Aparicio.pem
+          ansible-playbook -i inventario server1.yaml --become 
         continue-on-error: true
 
       - name: "Destrucción"
