@@ -28,3 +28,9 @@ jobs:
  
       - name: "Verificar paquete"
         run: ls -ltra target
+
+      - name: "Imagen Docker"
+        run: |
+          docker build -f Dockerfile . -t webgoat/test
+          docker images
+
