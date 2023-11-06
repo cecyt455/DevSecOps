@@ -56,8 +56,10 @@ jobs:
           terraform plan -out tfplan
           terraform apply tfplan >> results_tfplan.txt
           ip_webgoat=$(cat results_tfplan.txt | grep "Mi_ip= " | awk '{ print $3 }' | sed 's/"//g')
-          sed -i "s/IP/$ip_webgoat/g" ../Ansible/Inventario 
           echo $ip_webgoat
+          sed -i "s/IP/$ip_webgoat/g" ../Ansible/Inventario 
+        continue-on-error: true
+  
 
       - name: "Ejecutar Ansible"
         env: 
