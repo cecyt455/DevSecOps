@@ -10,6 +10,10 @@ subnet_id = "subnet-04ce466f"
 
 }
 
+output "mi_ip"{
+        value = aws_instance.my_instanceY.public_ip
+}
+
 resource "aws_security_group" "my_security_groupcecy" {
   name        = "my_security_groupcecy"
   description = "Security group for SSH and HTTP access"
