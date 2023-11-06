@@ -83,6 +83,7 @@ jobs:
  
       - name: "Finding IP"
         run: |
+          cd terraformm/
           ip_webgoat=$(cat terraformm/results_tfplan.txt | grep "Mi_ip = " | awk '{ print $3 }' | sed 's/"//g')
           curl http://$ip_webgoat:8080/WebGoat/login
  
