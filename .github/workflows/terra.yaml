@@ -47,22 +47,24 @@ jobs:
           docker tag webgoat/test:latest public.ecr.aws/n3j7o1e0/cecyrep:latest
           docker push public.ecr.aws/n3j7o1e0/cecyrep:latest
 
+     -  name: "checkov"
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          output_format: cli,sarif 
+          output_file_path: console, results.sarif
+          directory: terraformm
+          framwork: terraform
+          soft_fail: true
+
       - name: "Aprovisionamiento terraform"
         run: |
           cd terraformm/
           terraform init 
           terraform validate
           terraform plan -out tfplan
-          terraform apply tfplan >> results_tfplan.json
-          ip_webgoat=$(cat results_tfplan.json | grep "mi_ip= " | awk '{ print $3 }' | sed 's/"//g')
+          terraform apply tfplan >> results_tfplan.txt
+          ip_webgoat=$(cat results_tfplan.txt | grep "mi_ip= " | awk '{ print $3 }' | sed 's/"//g')
           sed -i "s/IP/$ip_webgoat/g" ../Ansible/inventario 
-
-      - name: "checkov"
-        run: |
-          sudo pip install checkov 
-          cd terreraformm/
-          terraform plan -out tfplan
-          terraform show -json tfplan | jq > tfplan.json
 
       - name: "Ejecutar Ansible"
         env: 
