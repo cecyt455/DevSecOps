@@ -11,7 +11,7 @@ subnet_id = "subnet-04ce466f"
 }
 
 output "mi_ip"{
-        value = aws_instance.my_instanceY.public_ip
+        value = aws_instance.my_instance.public_ip
 }
 
 resource "aws_security_group" "my_security_groupcecy" {
