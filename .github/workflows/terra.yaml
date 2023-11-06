@@ -52,7 +52,7 @@ jobs:
         with:
           output_format: cli,sarif 
           output_file_path: console, results.sarif
-          directory: terraformm
+          directory: Terraform
           framwork: terraform
           soft_fail: true
 
