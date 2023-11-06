@@ -47,7 +47,7 @@ jobs:
           docker tag webgoat/test:latest public.ecr.aws/n3j7o1e0/cecyrep:latest
           docker push public.ecr.aws/n3j7o1e0/cecyrep:latest
 
-     -  name: "checkov"
+      - name: "checkov"
         uses: bridgecrewio/checkov-action@v12
         with:
           output_format: cli,sarif 
