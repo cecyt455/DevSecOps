@@ -56,11 +56,10 @@ jobs:
           terraform apply tfplan >> results_tfplan.json
           ip_webgoat=$(cat results_tfplan.json | grep "My_ip=" | awk '{ print $3 }' | sed 's/"//g')
           sed -i "s/IP/$ip_webgoat/g" ../ansible1/inventario1 
-          
+
       - name: "checkov"
         run: |
-          sudo pip install checkov
-          python3 -m pip install --upgrade pip 
+          sudo pip install checkov 
           cd terreraformm/
           terraform plan -out tfplan
           terraform show -json tfplan.txt | jq > tfplan.json
