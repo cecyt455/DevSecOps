@@ -72,7 +72,7 @@ jobs:
           echo "$PRIVATE_KEY" >> $HOME/key.pem
           sudo chmod 600 $HOME/key.pem
           export ANSIBLE_HOST_KEY_CHECKING=False
-          ansible-playbook -i Inventario Server.yaml --become 
+          ansible-playbook -i Inventario Server.yaml --become --private-key $HOME/key.pem
           echo "Up server..."
           sleep 45
         continue-on-error: true
