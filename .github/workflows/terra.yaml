@@ -46,16 +46,7 @@ jobs:
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n3j7o1e0
           docker tag webgoat/test:latest public.ecr.aws/n3j7o1e0/cecyrep:latest
           docker push public.ecr.aws/n3j7o1e0/cecyrep:latest
-
-      - name: "checkov"
-        uses: bridgecrewio/checkov-action@v12
-        with:
-          output_format: cli,sarif 
-          output_file_path: console, results.sarif
-          directory: Terraform
-          framwork: terraform
-          soft_fail: true
-
+          
       - name: "Aprovisionamiento terraform"
         run: |
           cd terraformm/
@@ -73,11 +64,13 @@ jobs:
           sudo apt update
           sudo apt install -y ansible
           pip3 install "ansible-lint"
-          cd ansible1/
+          cd Ansible
           echo "$PRIVATE_KEY" >> $HOME/key.pem
           sudo chmod 600 $HOME/key.pem
           export ANSIBLE_HOST_KEY_CHECKING=False
           ansible-playbook -i inventario server1.yaml --become 
+          echo "Up server..."
+          sleep 45
         continue-on-error: true
 
 
