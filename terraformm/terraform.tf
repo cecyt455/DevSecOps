@@ -10,7 +10,7 @@ subnet_id = "subnet-04ce466f"
 
 }
 
-output "mi_ip"{
+output "My_ip"{
         value = aws_instance.my_ec2.public_ip
 }
 

@@ -54,7 +54,7 @@ jobs:
           terraform validate
           terraform plan -out tfplan
           terraform apply tfplan >> results_tfplan.txt
-          ip_webgoat=$(cat results_tfplan.txt | grep "mi_ip= " | awk '{ print $3 }' | sed 's/"//g')
+          ip_webgoat=$(cat results_tfplan.txt | grep "My_ip= " | awk '{ print $3 }' | sed 's/"//g')
           sed -i "s/IP/$ip_webgoat/g" ../Ansible/inventario 
 
       - name: "Ejecutar Ansible"
@@ -68,7 +68,7 @@ jobs:
           echo "$PRIVATE_KEY" >> $HOME/key.pem
           sudo chmod 600 $HOME/key.pem
           export ANSIBLE_HOST_KEY_CHECKING=False
-          ansible-playbook -i inventario server1.yaml --become 
+          ansible-playbook -i inventario server.yaml --become 
           echo "Up server..."
           sleep 45
         continue-on-error: true
@@ -80,7 +80,7 @@ jobs:
           tar -xvf arachni-1.6.1.3-0.6.1.1-linux-x86_64.tar.gz
  
       - name: "Finding IP"
-        run: var_IP=$(docker inspect webgoat/test | grep "mi_ip" | tail -1 | cut -d ',' -f 4)
+        run: var_IP=$(docker inspect webgoat/test | grep "MyAddress" | tail -1 | cut -d ',' -f 4)
  
       - name: "Executing Arachni"
         run: ./arachni-1.6.1.3-0.6.1.1/bin/arachni --check=* http://$var_IP:8080/WebGoat/login
