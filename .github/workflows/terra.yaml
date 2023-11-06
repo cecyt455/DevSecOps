@@ -32,6 +32,7 @@ jobs:
       - name: "Imagen Docker"
         run: |
           docker build -f Dockerfile . -t webgoat/test
+          docker tag webgoat/test:latest public.ecr.aws/n3j7o1e0/cecyrep:latest
           docker images
 
       - name: "Configure AWS Credentials"
