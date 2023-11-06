@@ -57,7 +57,7 @@ jobs:
           terraform apply tfplan >> results_tfplan.txt
           ip_webgoat=$(cat results_tfplan.txt | grep "Mi_ip= " | awk '{ print $3 }' | sed 's/"//g')
           sed -i "s/IP/$ip_webgoat/g" ../Ansible/inventario 
-          echo "$Mi_ip"
+          echo $ip_webgoat
 
       - name: "Ejecutar Ansible"
         env: 
@@ -87,7 +87,7 @@ jobs:
           curl http://$ip_webgoat:8080/WebGoat/login
  
       - name: "Executing Arachni"
-        run: ./arachni-1.6.1.3-0.6.1.1/bin/arachni --check=* http://$var_IP:8080/WebGoat/login
+        run: ./arachni-1.6.1.3-0.6.1.1/bin/arachni --check=* http://$ip_webgoat:8080/WebGoat/login
  
 
       - name: "Destrucción"
