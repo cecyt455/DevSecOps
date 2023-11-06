@@ -54,15 +54,15 @@ jobs:
           terraform validate
           terraform plan -out tfplan
           terraform apply tfplan >> results_tfplan.json
-          ip_webgoat=$(cat results_tfplan.json | grep "mi_ip=" | awk '{ print $3 }' | sed 's/"//g')
-          sed -i "s/IP/$ip_webgoat/g" ../ansible1/inventario1 
+          ip_webgoat=$(cat results_tfplan.json | grep "mi_ip= " | awk '{ print $3 }' | sed 's/"//g')
+          sed -i "s/IP/$ip_webgoat/g" ../Ansible/inventario 
 
       - name: "checkov"
         run: |
           sudo pip install checkov 
           cd terreraformm/
           terraform plan -out tfplan
-          terraform show -json tfplan.txt | jq > tfplan.json
+          terraform show -json tfplan | jq > tfplan.json
 
       - name: "Ejecutar Ansible"
         env: 
