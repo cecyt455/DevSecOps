@@ -72,7 +72,7 @@ jobs:
           echo "$PRIVATE_KEY" >> $HOME/key.pem
           sudo chmod 600 $HOME/key.pem
           export ANSIBLE_HOST_KEY_CHECKING=False
-          Ansible-playbook -i Inventario Server.yaml --become 
+          ansible-playbook -i Inventario Server.yaml --become 
           echo "Up server..."
           sleep 45
         continue-on-error: true
@@ -86,7 +86,7 @@ jobs:
       - name: "Finding IP"
         run: |
           cd terraformm/
-          ip_webgoat=$(cat terraformm/results_tfplan.txt | grep "Mi_ip = " | awk '{ print $3 }' | sed 's/"//g')
+          ip_webgoat=$(cat results_tfplan.txt | grep "Mi_ip = " | awk '{ print $3 }' | sed 's/"//g')
          
  
       - name: "Executing Arachni"
