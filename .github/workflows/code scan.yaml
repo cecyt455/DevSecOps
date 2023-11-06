@@ -63,8 +63,16 @@ jobs:
           exit-code: '1'
           severity: 'CRITICAL,HIGH'
           scanners: vuln,secret,config
+          format: 'sarif'
+          output: 'trivy-results.sarif'
         continue-on-error: true
          
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+          category: 'code'
+
       - name: "Contenedor"
         run: docker run -d -p 8080:80 --name cod webgoat/test
     
