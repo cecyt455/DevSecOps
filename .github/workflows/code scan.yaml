@@ -89,3 +89,5 @@ jobs:
         run: |
           docker container stop cod
           docker container rm cod
+
+      - name: Upload CodeQL SARIF report  uses: github/codeql-action/upload-sarif@v1  with:    sarif_file: ${{ steps.codeql.outputs.sarif_file }}
